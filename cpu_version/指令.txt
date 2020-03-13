@@ -1,0 +1,66 @@
+python test.py train --plot-every=150 --batch-size=128  --lr=1e-3  --env='poetry3'  --epoch=2
+python -m visdom.server
+python  test.py gen
+
+python testforvector.py train --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_arg.npz --pathforvec=C:\Users\XPS\Desktop\数据\没有增广的数据\vec.txt
+python testfornovec.py train --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_vec_without_arg.npz 
+
+
+(no-arg的数据)
+（没有增广的数据有vec）
+python testforvector.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_arg.npz --pathforvec=C:\Users\XPS\Desktop\数据\没有增广的数据\vec.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testtestingfix_19_withoutarg_28.pth --writepath=result_withvec_withoutarg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_withvec_withoutarg_ency.csv
+（增广的数据有vec）
+python testforvector.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\增广的数据\sequence.npz --pathforvec=C:\Users\XPS\Desktop\数据\增广的数据\vec.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testtestingfix_19_arg_28.pth --writepath=result_withvec_witharg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_withvec_witharg_ency.csv
+(没有增广的数据没有vec）
+python testfornovec.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_vec_without_arg.npz --model_path=C:\Users\XPS\Desktop\训练结果\28\test_19_witoutvec_withoutarg_28.pth --writepath=result_withoutvec_withoutarg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_withoutvec_withoutarg_ency.csv
+（增广的数据没有vec)
+python testfornovec.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\增广的数据\sequence_without_vec.npz --model_path=C:\Users\XPS\Desktop\训练结果\28\test_19_withoutvec_arg_28.pth --writepath=result_withoutvec_witharg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_withoutvec_witharg_ency.csv
+（关联规则）
+python testforfinding.py multi_gen --filename=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence.txt --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --writepath=result_AR.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_AR_ency.csv
+（没有增广的数据有vec没有fix）
+python testforvector.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_arg.npz --pathforvec=C:\Users\XPS\Desktop\数据\没有增广的数据\vec.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testtestingfix_withoutarg_19_unfix.pth --writepath=result_withvec_withoutarg_unfix.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_withvec_withoutarg_unfix_ency.csv
+（增广的数据有vec没有fix）
+python testforvector.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\增广的数据\sequence.npz --pathforvec=C:\Users\XPS\Desktop\数据\增广的数据\vec.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testtestingfix_arg_19_unfix.pth --writepath=result_withvec_witharg_unfix.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_withvec_witharg_unfix_ency.csv
+
+(没有增广的数据gru版本)
+python testforgru.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_arg.npz --pathforvec=C:\Users\XPS\Desktop\数据\没有增广的数据\vec.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testforgru_19_withoutarg.pth --writepath=result_gru_withoutarg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文\已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文\已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_gru_withoutarg_ency.csv
+(增广的数据gru版本)
+python testforgru.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\增广的数据\sequence.npz --pathforvec=C:\Users\XPS\Desktop\数据\增广的数据\vec.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testforgru_19_arg.pth --writepath=result_gru_witharg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文\已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文\已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_gru_witharg_ency.csv
+
+没有增广的数据rnn版本)
+python testforrnn.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_arg.npz --pathforvec=C:\Users\XPS\Desktop\数据\没有增广的数据\vec.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testforrnn_19.pth --writepath=result_rnn_withoutarg.csv --tablepath=C:\Users\XPS\Desktop\kdd论文\已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\kdd论文\已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_rnn_withoutarg_ency.csv
+(增广的数据rnn版本)
+python testforrnn.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\unarg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\增广的数据\sequence.npz --pathforvec=C:\Users\XPS\Desktop\数据\增广的数据\vec.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testforrnn_arg_19.pth --writepath=result_rnn_witharg.csv --tablepath=C:\Users\XPS\Desktop\kdd论文\已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\kdd论文\已完成\部门表格匿名转换\department_conver.txt --writepath_ency=result_rnn_witharg_ency.csv
+
+
+
+(arg的数据)
+（增广的数据有vec）
+python testforvector.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\arg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\增广的数据\sequence.npz --pathforvec=C:\Users\XPS\Desktop\数据\增广的数据\vec.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testtestingfix_19_arg_28.pth --writepath=argtest_result_withvec_witharg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=argtest_result_withvec_witharg_ency.csv
+
+（增广的数据没有vec)
+python testfornovec.py multi_gen --testsetpath=C:\Users\XPS\Desktop\测试结果\arg_test.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\增广的数据\sequence_without_vec.npz --model_path=C:\Users\XPS\Desktop\训练结果\28\test_19_withoutvec_arg_28.pth --writepath=argtest_result_withoutvec_witharg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=argtest_result_withoutvec_witharg_ency.csv
+
+（关联规则)
+python testforfinding.py multi_gen --filename=C:\Users\XPS\Desktop\数据\增广的数据\sequence.txt --testsetpath=C:\Users\XPS\Desktop\测试结果\arg_test.txt --writepath=argresult_AR.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=argresult_AR_ency.csv
+
+
+(没有训练的数据)
+（增广数据）
+python testforvector.py gen_with_vector --testsetpath=C:\Users\XPS\Desktop\数据\没有出现的关键词\seqfortest.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\增广的数据\sequence.npz --pathforvec=C:\Users\XPS\Desktop\数据\增广的数据\vec.txt --pathfortestvec=C:\Users\XPS\Desktop\数据\没有出现的关键词\gleanhavetrain.txt --model_path=C:\Users\XPS\Desktop\testtestingfix_arg_19.pth --writepath=testforwithouttrain.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=testforwithouttrain_ency.csv
+（没有增广数据）
+python testforvector.py gen_with_vector --testsetpath=C:\Users\XPS\Desktop\数据\没有出现的关键词\seqfortest.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_arg.npz --pathforvec=C:\Users\XPS\Desktop\数据\没有增广的数据\vec.txt --pathfortestvec=C:\Users\XPS\Desktop\数据\没有出现的关键词\gleanhavetrain.txt --model_path=C:\Users\XPS\Desktop\testtestingfix_withoutarg_19.pth --writepath=testforwithouttrain_withoutarg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文已完成\部门表格匿名转换\department_conver.txt --writepath_ency=testforwithouttrain_withoutarg_ency.csv
+
+（增广数据gru）
+python testforgru.py gen_with_vector --testsetpath=C:\Users\XPS\Desktop\数据\没有出现的关键词\seqfortest.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\增广的数据\sequence.npz --pathforvec=C:\Users\XPS\Desktop\数据\增广的数据\vec.txt --pathfortestvec=C:\Users\XPS\Desktop\数据\没有出现的关键词\gleanhavetrain.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testforgru_19_arg.pth --writepath=testforwithouttrain_gru_arg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文\已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文\已完成\部门表格匿名转换\department_conver.txt --writepath_ency=testforwithouttrain_gru_arg_ency.csv
+（没有增广数据gru）
+python testforgru.py gen_with_vector --testsetpath=C:\Users\XPS\Desktop\数据\没有出现的关键词\seqfortest.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_arg.npz --pathforvec=C:\Users\XPS\Desktop\数据\没有增广的数据\vec.txt --pathfortestvec=C:\Users\XPS\Desktop\数据\没有出现的关键词\gleanhavetrain.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testforgru_19_withoutarg.pth --writepath=testforwithouttrain_gru_withoutarg.csv --tablepath=C:\Users\XPS\Desktop\毕业论文\已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\毕业论文\已完成\部门表格匿名转换\department_conver.txt --writepath_ency=testforwithouttrain_gru_withoutarg_ency.csv
+
+（增广数据gru）
+python testforrnn.py gen_with_vector --testsetpath=C:\Users\XPS\Desktop\数据\没有出现的关键词\seqfortest.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\增广的数据\sequence.npz --pathforvec=C:\Users\XPS\Desktop\数据\增广的数据\vec.txt --pathfortestvec=C:\Users\XPS\Desktop\数据\没有出现的关键词\gleanhavetrain.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testforrnn_arg_19.pth --writepath=testforwithouttrain_rnn_arg.csv --tablepath=C:\Users\XPS\Desktop\kdd论文\已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\kdd论文\已完成\部门表格匿名转换\department_conver.txt --writepath_ency=testforwithouttrain_rnn_arg_ency.csv
+（没有增广数据gru）
+python testforrnn.py gen_with_vector --testsetpath=C:\Users\XPS\Desktop\数据\没有出现的关键词\seqfortest.txt --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_arg.npz --pathforvec=C:\Users\XPS\Desktop\数据\没有增广的数据\vec.txt --pathfortestvec=C:\Users\XPS\Desktop\数据\没有出现的关键词\gleanhavetrain.txt --model_path=C:\Users\XPS\Desktop\训练结果\28\testforrnn_19.pth  --writepath=testforwithouttrain_rnn_withoutarg.csv --tablepath=C:\Users\XPS\Desktop\kdd论文\已完成\部门表格匿名转换\table_conver.txt --departmentpath=C:\Users\XPS\Desktop\kdd论文\已完成\部门表格匿名转换\department_conver.txt --writepath_ency=testforwithouttrain_rnn_withoutarg_ency.csv
+
+
+
+
