@@ -1,6 +1,6 @@
 python test.py train --plot-every=150 --batch-size=128  --lr=1e-3  --env='poetry3'  --epoch=2
 python -m visdom.server
-python  test.py gen
+python  test.py 
 
 python testforvector.py train --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_arg.npz --pathforvec=C:\Users\XPS\Desktop\数据\没有增广的数据\vec.txt
 python testfornovec.py train --parsed_data_path=C:\Users\XPS\Desktop\数据\没有增广的数据\sequence_without_vec_without_arg.npz 

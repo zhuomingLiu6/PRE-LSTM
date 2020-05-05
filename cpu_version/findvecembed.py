@@ -14,8 +14,9 @@ from torch.autograd import Variable
 from utils import Visualizer
 import random
 import csv
-from function import *
 from model import *
+from function import *
+
 #tablepath = r'C:\Users\XPS\Desktop\唯一表格名字.txt'
 #测试词向量
 model_path = r"C:\Users\XPS\Desktop\训练结果\28\test_19_withoutvec_arg_28.pth"

@@ -13,8 +13,9 @@ from torch.autograd import Variable
 from utils import Visualizer
 import random
 import csv
-from function import *
 from model import *
+from function import *
+
 
 #config the parameter
 class Config(object):
@@ -152,53 +153,6 @@ def train(**kwargs):
 
     t.save(model.state_dict(), '%s_%s.pth' % ("test_witoutvec", epoch))
 
-# function for generation with index
-def generate(model, start_words, ix2word, word2ix):
-    final_result = []
-    #print(start_words)
-    for start_word in start_words:
-        #print("test")
-        results = start_word
-        start_word_len = len(start_word)
-        # 手动设置第一个词为<START>
-        input = t.Tensor([word2ix['<START>']]).view(1, 1).long()
-        if opt.use_gpu: input = input.cuda()
-        hidden = None
-        #print(results)
-        #生成
-        for i in range(start_word_len+1):
-            output, hidden = model(input, hidden)
-
-            if i < start_word_len:
-                w = results[i]
-                input = input.data.new([word2ix[w]]).view(1, 1)
-            else:
-                top_indexes = output.data[0].topk(10)[1]
-                #print("testing")
-                #print(output.data[0].topk(10))
-                #print(ix2word[196])
-                for i in range(len(top_indexes)):
-                	results.append(ix2word[top_indexes[i].item()])
-        final_result.append(results)
-    return final_result
-
-# called function for generation with index with one pair
-def gen(**kwargs):
-    """
-    提供命令行接口，用以生成相应的诗
-    """
-
-    data, word2ix, ix2word = load_data_(opt.parsed_data_path)
-    model = TrainingModel(len(word2ix), 200, 400);
-    map_location = lambda s, l: s
-    state_dict = t.load(opt.model_path, map_location=map_location)
-    model.load_state_dict(state_dict)
-
-    if opt.use_gpu:
-        model.cuda()
-
-    result = generate(model, opt.start_words, ix2word, word2ix)
-    print(','.join(result))
 
 # called function for generation with index with multi pair
 def multi_gen(**kwargs):
@@ -217,7 +171,7 @@ def multi_gen(**kwargs):
     #print(opt.parsed_data_path)
 
     data, word2ix, ix2word = load_data_(opt.parsed_data_path)
-    model = TrainingModel(len(word2ix), 200, 400);
+    model = TrainingModel(len(word2ix), 200, 400)
     map_location = lambda s, l: s
     state_dict = t.load(opt.model_path, map_location=map_location)
     model.load_state_dict(state_dict)
@@ -225,7 +179,7 @@ def multi_gen(**kwargs):
     if opt.use_gpu:
         model.cuda()
 
-    result = generate(model, stripresult, ix2word, word2ix)
+    result = generate_sim(model, stripresult, ix2word, word2ix)
     #print(','.join(result))
 
     write_csv(result,opt.writepath)
