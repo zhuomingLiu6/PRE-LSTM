@@ -109,10 +109,6 @@ def train(**kwargs):
                 vis.plot('loss', loss_meter.value()[0])
                 vis.plot('loss', loss.item())
 
-                
-                poetrys = [[ix2word[_word] for _word in data_[:, _iii].tolist()]
-                           for _iii in range(data_.shape[1])][:16]
-
         # for test
         loss_meter.reset()
         model.eval()      # 设置为test模式  
@@ -179,7 +175,7 @@ def multi_gen(**kwargs):
     if opt.use_gpu:
         model.cuda()
 
-    result = generate_sim(model, stripresult, ix2word, word2ix)
+    result = generate_sim(model, stripresult, ix2word, word2ix,opt)
     #print(','.join(result))
 
     write_csv(result,opt.writepath)

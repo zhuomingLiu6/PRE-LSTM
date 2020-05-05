@@ -135,7 +135,7 @@ def train(**kwargs):
         testtarget=np.transpose(testtarget.numpy()).tolist()
         #print(testinput)
         #print(testtarget)
-        testresult = generate_test(model, testinput, ix2word_train, word2ix_train, ix2word_fix, word2ix_fix)
+        testresult = generate_test(model, testinput, ix2word_train, word2ix_train, ix2word_fix, word2ix_fix,opt)
         #print(testresult)
         inornot, rankingnum = final_test(testresult,testtarget)
 
@@ -180,8 +180,54 @@ def multi_gen(**kwargs):
     if opt.use_gpu:
         model.cuda()
 
-    result = generate(model, stripresult, ix2word_train, word2ix_train, ix2word_fix, word2ix_fix)
+    result = generate(model, stripresult, ix2word_train, word2ix_train, ix2word_fix, word2ix_fix,opt)
     # write the result into the csv
+    write_csv(result,opt.writepath)
+    ency,lossprecent = covert_to_encrypt(result,opt.tablepath,opt.departmentpath)
+    write_csv(ency,opt.writepath_ency)
+    print(lossprecent)
+
+
+# the called function for generation with the vector for the key word
+def gen_with_vector(**kwargs):
+    #入口数据就为两个 一个是部门 一个是关键词向量
+    
+    for k, v in kwargs.items():
+        setattr(opt, k, v.strip("'"))
+
+    file_object=open(opt.testsetpath,'r',encoding='utf-8')
+    data = file_object.read()
+    file_object.close()
+    data = data.split('\n')
+    finaldata = data_split_inner(data,' ')
+
+    #pair = [['公安',[0.185774,0.240292,0.004667,0.194717,-0.602632,0.245656,0.258343,-0.163758,-0.105399,-0.483415,-0.119850,-0.061783,0.141093,-0.278988,-0.238508,-0.270287,-0.363062,-0.526103,0.324706,0.214232,-0.444421,-0.389982,-0.208329,-0.250402,0.140813,0.612041,-0.388810,0.442441,0.094806,0.403121,-0.075520,-0.215281,0.472267,0.539537,-0.198181,0.521075,0.025065,-0.073142,-0.005518,-0.466331,-0.011482,0.455457,0.522161,-0.429649,-0.167342,0.172249,-0.498246,0.040961,0.166752,0.165913,-0.046194,0.102941,0.282750,-0.111863,0.200259,-0.473747,0.165709,0.321475,-0.060773,0.056295,-0.124481,0.078447,0.245033,0.201244,-0.220066,-0.473854,0.156142,0.351557,-0.077365,-0.418671,-0.576947,-0.327172,-0.059312,0.141462,-0.138260,0.015616,0.242208,0.100440,-0.126658,-0.344706,0.078268,0.353345,-0.459928,0.355435,-0.298799,-0.584326,-0.035596,-0.056843,0.008961,-0.737625,0.650411,0.302178,-0.308775,-0.074439,-0.005482,-0.331152,-0.406975,0.050284,0.081398,0.085459,-0.102804,0.044128,-0.430915,-0.011778,-0.427645,0.239175,-0.032082,-0.560575,-0.344889,0.369777,-0.258999,-0.389398,-0.131652,-0.104312,-0.404019,0.167957,-0.160930,-0.291415,0.517506,-0.243406,0.020856,-0.411876,-0.346382,0.143864,-0.058643,0.134075,-0.060899,0.193994,-0.480253,-0.195371,-0.381812,-0.214213,-0.123320,0.447235,-0.057068,-0.235316,-0.311169,0.095653,-0.045980,-0.039832,-0.087425,0.001695,-0.472713,-0.641947,0.081975,0.175762,0.199911,0.501622,0.092125,0.014051,0.233818,-0.270307,-0.202669,0.033757,-0.427492,-0.006059,0.611274,-0.066681,0.512747,-0.095007,0.423356,0.128483,-0.380595,0.004818,0.691321,-0.063294,-0.171382,0.145801,0.376692,-0.209230,0.070547,-0.601059,-0.304845,0.242572,-0.136051,-0.039179,0.377138,0.041296,-0.105958,-0.076830,0.236428,-0.347921,-0.091339,0.352473,0.561357,-0.127522,0.266830,0.373282,0.559688,-0.023055,0.685433,0.006953,0.516254,0.327722,0.525244,0.392855,-0.256328,0.374918,-0.022773,0.486938]]]
+    #读vector
+    vec = read_vec(opt.pathfortestvec)
+    #换成vector
+    pair = converttovector(finaldata,vec)
+
+    data, word2ix_train, ix2word_train, word2ix_fix, ix2word_fix = load_data(opt.parsed_data_path)
+    model = TrainingModel_GRUVec(len(word2ix_train), len(word2ix_fix), 200, 400)
+    map_location = lambda s, l: s
+    state_dict = t.load(opt.model_path, map_location=map_location)
+    model.load_state_dict(state_dict)
+
+    pretrained_weight = form_matrix(ix2word_fix,opt.pathforvec)
+    pretrained_weight = np.array(pretrained_weight)
+    model.embeddingsfix.weight.data.copy_(t.from_numpy(pretrained_weight))
+    
+
+    if opt.use_gpu:
+        model.cuda()
+
+    result = generate_with_vector(model, pair, ix2word_train, word2ix_train, ix2word_fix, word2ix_fix,opt)
+    #print(result[0][0])
+    #print(result[0][2:])
+    result = rever_to_name(result,vec)
+    #print(result)
+
+    #分别写csv和txt
     write_csv(result,opt.writepath)
     ency,lossprecent = covert_to_encrypt(result,opt.tablepath,opt.departmentpath)
     write_csv(ency,opt.writepath_ency)
